@@ -1,3 +1,7 @@
+# Sandbox Architecture
+
+This repository is a forked from Glowscript with changes to host a static, sandboxed version of WebVPython. Please read about the sandbox architecture [here](./Sandbox.md). 
+
 # GlowScript
 
 GlowScript makes it easy to write programs in JavaScript or [VPython](http://vpython.org) (which uses the RapydScript compiler) that generate navigable real-time 3D animations, using the WebGL 3D graphics library available in modern browsers (with modern GPU-based graphics cards). For example, the following complete program creates a 3D canvas in the browser, displays a white 3D cube, creates default lighting, places the camera so that the cube fills the scene, and enables mouse controls to rotate and zoom the camera:
