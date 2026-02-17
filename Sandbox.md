@@ -27,7 +27,7 @@ Because the default-src is 'self', anything on the origin, `<user|organization>.
 
 ## Override Meta & Insert Iframe
 
-The idea is that a Content Security Policy can be declared in the `iframe srcdoc=GlowScript.txt sandbox` document or a child iframe, and an iframe can be embedded, where only the most direct CSP will be used. However, this does not work because with srcdoc iframes, and content appears to be checked by all ancestor CSPs.
+The idea is that a Content Security Policy can be declared in the `iframe srcdoc=GlowScript.txt sandbox` document or a child iframe, and an iframe can be embedded, which would be checked by only the most direct CSP. However, this does not work because with srcdoc iframes, and content appears to be checked by all ancestor CSPs.
 
 ## Serviceworker Hijack
 
