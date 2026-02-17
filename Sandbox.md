@@ -23,6 +23,20 @@ child-src 'none';
 
 Because the default-src is 'self', anything on the origin, `<user|organization>.github.io` can be accessed by the sandboxed user code, hence requiring a dedicated user or organization with no other github pages deployments.
 
+# Tested Attacks
+
+## Override Meta & Insert Iframe
+
+The idea is that a Content Security Policy can be declared in the `iframe srcdoc=GlowScript.txt sandbox` document or a child iframe, and an iframe can be embedded, which would be checked by only the most direct CSP. However, this does not work because with srcdoc iframes, and content appears to be checked by all ancestor CSPs.
+
+## Serviceworker Hijack
+
+If a serviceworker is registered, it may be able to load content from other sources. This is not possible because resources returned by serviceworkers are still checked against the CSP. Additionally, a serviceworker requires a url to locate the serviceworker file, and an eval-like string to execute javascript cannot be passed as the url.
+
+## Cookies & LocalStorage
+
+Information could be stored in cookies or local storage and accessed later. This is not possible because the code is executed in an iframe that has 'sandbox' without 'allow-same-origin', so cookies and local storage cannot be accessed.
+
 # Local Development
 
 The sandbox can be built locally by running:
