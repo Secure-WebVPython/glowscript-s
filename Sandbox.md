@@ -35,7 +35,7 @@ If a serviceworker is registered, it may be able to load content from other sour
 
 ## Cookies & LocalStorage
 
-Information could be stored in cookies or local storage and accessed later. This is not possible because the code is executed in an iframe that has 'sandbox' without 'allow-same-origin', so cookies and local storage cannot be accessed;
+Information could be stored in cookies or local storage and accessed later. This is not possible because the code is executed in an iframe that has 'sandbox' without 'allow-same-origin', so cookies and local storage cannot be accessed.
 
 # Local Development
 
