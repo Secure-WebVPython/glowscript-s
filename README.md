@@ -2,6 +2,20 @@
 
 This repository is a forked from Glowscript with changes to host a static, sandboxed version of WebVPython. Please read about the sandbox architecture [here](./Sandbox.md). 
 
+# Conditional Formatting 
+
+The code editor can be displayed with either a horizontal or vertical format.
+
+## Horizontal
+
+This is the default formatting method. The code editor is displayed on the left and the output on the right. The 3D view is hidden by default but can be seen by dragging open the vertical handles between the code editor and output.
+
+## Vertical
+
+This formatting can be displayed by using the url search parameter `format` with value `v`, `vert`, or `vertical`. The editor is displayed at the top, the output below it, and the 3D view at the bottom if it is created by the code.
+
+In order to display the vertical format, load the sandbox with a url like this: `index.html?format=v`
+
 # GlowScript
 
 GlowScript makes it easy to write programs in JavaScript or [VPython](http://vpython.org) (which uses the RapydScript compiler) that generate navigable real-time 3D animations, using the WebGL 3D graphics library available in modern browsers (with modern GPU-based graphics cards). For example, the following complete program creates a 3D canvas in the browser, displays a white 3D cube, creates default lighting, places the camera so that the cube fills the scene, and enables mouse controls to rotate and zoom the camera:

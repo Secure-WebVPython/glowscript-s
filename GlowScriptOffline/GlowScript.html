@@ -7,42 +7,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
         <style>
-            .GlowScriptBody {
-                overflow: hidden;
-            }
-
             .api {
                 height: 300px;
                 border: 1px solid #ddd;
                 border-radius: 4px;
-            }
-
-            .split p {
-                padding: 20px;
-            }
-
-            .split {
-                -webkit-box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                box-sizing: border-box;
-                overflow-y: auto;
-                overflow-x: hidden;
-            }
-
-            .gutter {
-                background-color: #ccc;
-                background-repeat: no-repeat;
-                background-position: 50%;
-            }
-
-            .gutter.gutter-horizontal {
-                cursor: ew-resize;
-            }
-
-            .split.split-horizontal,
-            .gutter.gutter-horizontal {
-                height: 100%;
-                float: left;
             }
 
             .top-bar {
@@ -51,12 +19,19 @@
                 align-items: center;
             }
 
-            #edit {
+            textarea {
                 resize: none;
             }
 
             #print {
                 outline: none;
+                border: solid grey 1px !important;
+                margin-left: 0px !important;
+            }
+
+            #linenumbers {
+                outline: none;
+                user-select: none;
             }
 
             #gserrors {
@@ -64,22 +39,22 @@
                 position: absolute;
                 border: 1px solid black;
                 left: 5px;
-                top: 200%;
+                top: -1000%;
                 width: calc(100% - 20px);
-                height: 50%;
-                overflow: scroll;
+                height: 40%;
+                overflow: auto;
                 outline: none;
                 padding-left: 5px;
 
                 &:focus-within {
-                    top: 5px;
+                    top: 15%;
                 }
 
                 .close-button {
                     font-size: x-large;
                     position: absolute;
                     top: 0px;
-                    right: 4px;
+                    right: 10px;
                     color: black;
                     user-select: none;
                 }
@@ -152,7 +127,7 @@
     <div id="changes-indicator"></div>
 </div>
 
-<!-- <button onclick="saveCode()">Save</button>
+<!--
 &nbsp;&nbsp;&nbsp;
 <a href="VPythonDocs/index.html" target="_blank">Help</a>
 &nbsp;&nbsp;&nbsp;
@@ -261,7 +236,7 @@
 
     function runCode() {
         usertext = getHeader(false)
-        splitAdjust()
+        // splitAdjust()
         gsErrordiv = $("#gserrors")[0]
         localCompile(ready, gsErrordiv)
 
@@ -381,69 +356,29 @@
 </div>
 
 <script>
-    // Splits library: https://github.com/nathancahill/Split.js
+    // inject format
+    const format = /*↝*/"horizontal"/*↝*/;
+
+    const formatScript = document.createElement('script');
+    formatScript.src = `./format/${format}.js`;
+    document.body.appendChild(formatScript);
+
+    const formatStyle = document.createElement('link');
+    formatStyle.href = `./format/${format}.css`;
+    formatStyle.rel = 'stylesheet';
+    formatStyle.type = 'text/css';
+    document.head.appendChild(formatStyle);
+
     var lastwindowwidth = window.innerWidth
-    var splits = Split(['#sourcetext', '#glows', "#printing"], { sizes: [50, 0, 45], onDrag: splitdrag })
-    // splits.getSizes() returns current percentage widths; splits.setSizes([w1,w2]) resets them
+
     var source = ''
-    GSedit.init("#sourcetext", source, 0.5 * lastwindowwidth, false) // not readonly
-
-    function splitdrag() {
-        var s = splits.getSizes() // returns [width1, width2, width3]
-        lastprintwidth = splits.getSizes()[2]
-        GSedit.setwidth(0.01 * s[0] * window.innerWidth)
-    }
-
-    function splitAdjust() {  // p is true if print pane should be open
-        return
-        var current = splits.getSizes()
-        var w1 = current[0] * lastwindowwidth / window.innerWidth
-        var w2 = current[1]
-        var w3 = current[2]
-        var rest = 100 - w1
-        lastwindowwidth = window.innerWidth
-        if (printpane) {
-            if (lastprintwidth === null) splits.setSizes([w1, 0.7 * rest, 0.3 * rest])
-            else splits.setSizes([w1, rest - lastprintwidth, lastprintwidth])
-            lastprintwidth = splits.getSizes()[2]
-        } else splits.setSizes([w1, rest, 0])
-        GSresize(0.01 * w1 * window.innerWidth)
-        print_options({ height: 300 })
-    }
-
-    $(window).resize(function () {
-        splitAdjust()
-    })
+    GSedit.init("#sourcetext", source, 0.5 * lastwindowwidth, false, 400) // not readonly
 
     window.onbeforeunload = undefined // execute window.onbeforeunload = Quit if GSedit.changed() is true
 
-    function Quit(e) { // Some browsers just say "Do you want to leave this site? Changes you made may not have been saved."
-        var s = "To continue without saving, click OK.\nTo save, click Cancel, then click save."
-        e.returnValue = s
-        return s
-    }
-
-    // https://ourcodeworld.com/articles/read/189/how-to-create-a-file-and-generate-a-download-with-javascript-in-the-browser-without-a-server
-    function download(filename, text) {
-        var element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-        element.setAttribute('download', filename);
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-    }
-
-    var lastname = '' // the file name chosen the last time the user saved code
-
-    function saveCode() {
-        var name = prompt("Enter the file name (without extension)", lastname)
-        if (name === null) return
-        lastname = name
-        var extension = '.py'
-        if (!GSedit.isPython()) extension = '.js'
-        if (exporting) extension = '.html'
-        download(name + extension, GSedit.getValue())
+    function Quit(e) {
+        // this exists but does nothing because editor.js requires it
+        // bad code practice, not my fault.
     }
 
     function reportScriptError(program, err) { // This machinery only gives trace information on Chrome
@@ -529,6 +464,7 @@
     }
 
     const textarea = $("#sourcetext");
+    textarea[0].scrollTo(0, 0); // fix inital scroll being at bottom
     textarea[0].addEventListener('input', (e) => {
         // text has been changed, so remove indication the code is the latest
         const indicator = $("#changes-indicator")?.[0];
@@ -536,7 +472,6 @@
             indicator.classList.remove('latest');
         }
     })
-
 </script>
 
 </html>

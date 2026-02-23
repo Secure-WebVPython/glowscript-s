@@ -47,6 +47,10 @@ console.log(`Copied sandbox contents to ${distDir}`);
 copyDir(path.join(glowscriptOfflineDir, 'glowscript_libraries'), path.join(distDir, 'glowscript_libraries'));
 console.log(`Copied glowscript_libraries to ${distDir}`);
 
+// Copy format folder
+copyDir(path.join(glowscriptOfflineDir, 'format'), path.join(distDir, 'format'));
+console.log(`Copied format folder to ${distDir}`);
+
 // Copy GlowScript.html
 fs.copyFileSync(path.join(glowscriptOfflineDir, 'GlowScript.html'), path.join(distDir, 'GlowScript.txt'));
 console.log(`Copied GlowScript.html to ${distDir}`);
