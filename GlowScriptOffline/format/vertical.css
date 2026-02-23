@@ -1,0 +1,40 @@
+.GlowScriptBody {
+    overflow: scroll;
+}
+
+#sourcetext {
+    display: flex;
+    flex-direction: row;
+
+    #edit {
+        width: 100% !important;
+    }
+}
+
+#print {
+    height: 70px !important;
+}
+
+.glowscript-canvas-wrapper.ui-resizable {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.api {
+    display: flex;
+    flex-direction: column;
+}
+
+.split.split-horizontal {
+    width: 100%;
+
+    &#glows {
+        height: 70%;
+        flex-shrink: 1;
+    }
+
+    &#printing {
+        height: 30%;
+    }
+
+}

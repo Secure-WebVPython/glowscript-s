@@ -62,11 +62,11 @@ GSedit.setwidth = function(w) { // w is the width used by the program text; affe
 	GSedit.editarea.css('width', w-numberwidth-wmargin)
 }
 
-GSedit.init = function(placement, source, width, readonly) {
+GSedit.init = function(placement, source, width, readonly, height) {
 	window.onbeforeunload = undefined
 	GSedit.readonly = readonly
 	var w = width-numberwidth-wmargin
-	var h = window.innerHeight -hmargin
+	var h = height ?? (window.innerHeight -hmargin)
 	GSedit.linenumbersarea = $('<textarea id=linenumbers></textarea>').appendTo($(placement)).css('font-family', 
 		'monospace').css('overflow', 'hidden').css('font-size', '13px').css('float',
 		'left').css('width', numberwidth).css('height', h).css('resize', 'none').css('text-align',
