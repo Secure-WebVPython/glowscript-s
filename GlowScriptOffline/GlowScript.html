@@ -238,6 +238,13 @@
         usertext = getHeader(false)
         // splitAdjust()
         gsErrordiv = $("#gserrors")[0]
+
+        // clear print textarea element
+        const printArea = document.getElementById("print");
+        if(printArea != null){
+            printArea.value = "";
+        }
+
         localCompile(ready, gsErrordiv)
 
         const indicator = $("#changes-indicator")?.[0];
