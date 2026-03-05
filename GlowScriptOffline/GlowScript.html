@@ -70,6 +70,16 @@
                 font-size: 15px;
             }
 
+            #export-code {
+                background-color: rgb(57, 131, 160);
+                border: none;
+                padding: 5px 7px 5px 7px;
+                color: rgb(255, 255, 255);
+                border-radius: 2px;
+                font-size: 15px;
+                margin-left: 20px;
+            }
+
             #changes-indicator {
                 display: inline-block;
 
@@ -125,6 +135,7 @@
 <div class="top-bar">
     <button id="run-code" onclick="runCode()">Run</button>
     <div id="changes-indicator"></div>
+    <button id='export-code' hidden>Export</button>
 </div>
 
 <!--
@@ -241,7 +252,7 @@
 
         // clear print textarea element
         const printArea = document.getElementById("print");
-        if(printArea != null){
+        if (printArea != null) {
             printArea.value = "";
         }
 
@@ -366,6 +377,13 @@
     // inject format
     const format = /*↝*/"horizontal"/*↝*/;
 
+    // inject whether exporting is allowed;
+    const allowExport = /*↙*/false/*↙*/;
+
+    // inject initial code
+    const initalCodeEncoded = /*↡*/""/*↡*/;
+    const intialCode = decodeURI(initalCodeEncoded);
+
     const formatScript = document.createElement('script');
     formatScript.src = `./format/${format}.js`;
     document.body.appendChild(formatScript);
@@ -479,6 +497,29 @@
             indicator.classList.remove('latest');
         }
     })
+
+    exportCode: {
+        if (allowExport) {
+            const exportButton = document.getElementById('export-code');
+            const codeTextarea = document.getElementById('edit');
+            if (exportButton == null || codeTextarea == null) { break exportCode; }
+            exportButton.hidden = false;
+            exportButton.addEventListener('click', () => {
+                const text = codeTextarea.value;
+                const encoded = encodeURI(text);
+                navigator.clipboard.writeText(encoded);
+                console.log(encoded);
+            });
+        }
+    }
+
+    intialCode: {
+        if (intialCode !== "") {
+            const codeTextarea = document.getElementById('edit');
+            if (codeTextarea == null) { break intialCode; }
+            codeTextarea.value = intialCode;
+        }
+    }   
 </script>
 
 </html>
