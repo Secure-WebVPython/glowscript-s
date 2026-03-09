@@ -15,26 +15,33 @@
     height: 70px !important;
 }
 
-.glowscript-canvas-wrapper.ui-resizable {
+/* Center canvas */
+/* .glowscript-canvas-wrapper.ui-resizable {
     left: 50%;
     transform: translateX(-50%);
-}
+} */
 
 .api {
     display: flex;
     flex-direction: column;
+    min-height: auto;
 }
 
 .split.split-horizontal {
     width: 100%;
 
     &#glows {
-        height: 70%;
+        height: auto;
+        min-height: 10px;
         flex-shrink: 1;
     }
 
     &#printing {
-        height: 30%;
+        height: auto;
+
+        & * {
+            margin-right: 10px;
+        }
     }
 
 }
