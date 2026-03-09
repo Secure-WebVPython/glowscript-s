@@ -11,7 +11,7 @@ const allowExport = (allowExportParam === 't' || allowExportParam === 'true' || 
 const allowExportString = allowExport ? 'true' : 'false';
 const iframeAllow = allowExport ? 'clipboard-write' : '';
 const intialCodeParam = urlParams.get('code') ?? "";
-const intialCode = encodeURI(intialCodeParam);
+const intialCode = encodeURIComponent(intialCodeParam).replace(/'/g, "%27").replace(/"/g, "%22"); // encode quotation marks to prevent string from breaking when inserted
 
 const srcdoc = `
     <!DOCTYPE html>
