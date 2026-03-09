@@ -3,6 +3,7 @@ const sandbox = document.getElementById('sandbox');
 const regexFormat = '(↝\\\\*\\\/\\")(horizontal)(\\"\\\/\\\\*\\↝)';
 const regexExport = '(↙\\\\*\\\/)(false)(\\\/\\\\*\\↙)';
 const regexCode = '(↡\\\\*\\\/\\")()(\\"\\\/\\\\*\\↡)';
+const regexHeight = '(⤦\\\\*\\\/)(0)(\\\/\\\\*\\⤦)';
 const urlParams = new URLSearchParams(window.location.search);
 const formatParam = urlParams.get('format');
 const format = (formatParam === 'v' || formatParam === 'vert' || formatParam == 'vertical') ? 'vertical' : 'horizontal';
@@ -12,6 +13,7 @@ const allowExportString = allowExport ? 'true' : 'false';
 const iframeAllow = allowExport ? 'clipboard-write' : '';
 const intialCodeParam = urlParams.get('code') ?? "";
 const intialCode = encodeURIComponent(intialCodeParam).replace(/'/g, "%27").replace(/"/g, "%22"); // encode quotation marks to prevent string from breaking when inserted
+const editorHeight = urlParams.get('height') ?? 0;
 
 const srcdoc = `
     <!DOCTYPE html>
@@ -30,10 +32,12 @@ const srcdoc = `
                     const regexFormat = new RegExp('${regexFormat}', 'gm');
                     const regexExport = new RegExp('${regexExport}', 'gm');
                     const regexCode = new RegExp('${regexCode}', 'gm');
+                    const regexHeight = new RegExp('${regexHeight}', 'gm');
                     sandbox.srcdoc = glowscriptHTML
                         .replace(regexFormat,'$1${format}$3')
                         .replace(regexExport,'$1${allowExportString}$3')
-                        .replace(regexCode,'$1${intialCode}$3');
+                        .replace(regexCode,'$1${intialCode}$3')
+                        .replace(regexHeight, '$1${editorHeight}$3');
                 };
                 xhr.open("GET", "GlowScript.txt");
                 xhr.send();

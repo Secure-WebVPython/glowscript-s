@@ -1,6 +1,11 @@
 .GlowScriptBody {
-                overflow: hidden;
-            }
+    overflow: hidden;
+}
+
+.api {
+    min-height: 0px;
+    margin-bottom: 10px;
+}
 
 .split p {
     padding: 20px;
@@ -28,4 +33,8 @@
 .gutter.gutter-horizontal {
     height: 100%;
     float: left;
+}
+
+#sourcetext {
+    width: auto !important;
 }
