@@ -382,7 +382,7 @@
 
     // inject initial code
     const initalCodeEncoded = /*↡*/""/*↡*/;
-    const intialCode = decodeURI(initalCodeEncoded);
+    const intialCode = decodeURIComponent(initalCodeEncoded);
 
     const formatScript = document.createElement('script');
     formatScript.src = `./format/${format}.js`;
@@ -506,7 +506,7 @@
             exportButton.hidden = false;
             exportButton.addEventListener('click', () => {
                 const text = codeTextarea.value;
-                const encoded = encodeURI(text);
+                const encoded = encodeURIComponent(text);
                 navigator.clipboard.writeText(encoded);
                 console.log(encoded);
             });
