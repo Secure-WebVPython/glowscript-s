@@ -16,6 +16,17 @@ This formatting can be displayed by using the url search parameter `format` with
 
 In order to display the vertical format, load the sandbox with a url like this: `index.html?format=v`
 
+# Additional Configurations
+
+## Export
+This allows code to be exported to a uriencoded string by using the url search parameter `export` with the value `true` or `t` or `yes`. When the export button is clicked, the uriencoded string will attempt to be copied to the clipboard. The string is also printed in the developer console for redundancy.
+
+## Code
+This allows code to be imported by using the url search parameter `code` with the value of a uriencoded string, so the code appears in the editor.
+
+## Section Widths
+This allows the widths of the glowscript sections (editor, glows, printing) to be configured with the url search parameter `section-widths` with the value `{w1},{w2},{w3}` where w1, w2, and w3 are all numbers representing the percent widths of the respective sections. If they do not add to 100, then the sections' widths may appear to glitch when they are dragged with the tab bars. Note that this configuration requires `format=horizontal`. 
+
 # GlowScript
 
 GlowScript makes it easy to write programs in JavaScript or [VPython](http://vpython.org) (which uses the RapydScript compiler) that generate navigable real-time 3D animations, using the WebGL 3D graphics library available in modern browsers (with modern GPU-based graphics cards). For example, the following complete program creates a 3D canvas in the browser, displays a white 3D cube, creates default lighting, places the camera so that the cube fills the scene, and enables mouse controls to rotate and zoom the camera:
