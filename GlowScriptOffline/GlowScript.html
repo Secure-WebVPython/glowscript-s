@@ -416,7 +416,13 @@
     // inject editor height
     let editorHeight = /*⤦*/0/*⤦*/;
 
-    if(format === "vertical" && editorHeight === 0){
+    // inject editor section widths
+    let sectionWidths = /*⤧*/0/*⤧*/;
+    if (sectionWidths !== 0 && format == "horizontal") {
+        window.splitSectionWidths = sectionWidths;
+    }
+
+    if (format === "vertical" && editorHeight === 0) {
         // default is ~50px which would never be useful
         editorHeight = 300;
     }
@@ -555,6 +561,7 @@
             const codeTextarea = document.getElementById('edit');
             if (codeTextarea == null) { break intialCode; }
             codeTextarea.value = intialCode;
+            GSupdate(); // inital update for line numbers
         }
     }
 

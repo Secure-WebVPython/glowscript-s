@@ -17,6 +17,10 @@
     box-sizing: border-box;
     overflow-y: auto;
     overflow-x: hidden;
+
+    &#glows {
+        overflow-x: auto;
+    }
 }
 
 .gutter {
