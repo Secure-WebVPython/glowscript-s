@@ -50,13 +50,15 @@ const srcdoc = `
                 xhr.open("GET", "GlowScript.txt");
                 xhr.send();
 
+                let initialized = false;
                 window.addEventListener('message', (e)=>{
                     if(e?.data?.type === 'load' && e?.origin === 'null'){
                         sandbox.contentWindow.postMessage({type:'load', content: e.data.content}, '*');
                     } else if(e?.data?.type === 'save' && e?.origin === 'null'){
                         window.parent.postMessage({type: 'save', content: e.data.content}, '*');
-                    } else if(e?.data?.type === 'init' && e?.origin === 'null'){
-                        window.parent.postMessage({type:'init'});
+                    } else if(e?.data?.type === 'init' && e?.origin === 'null' && initialized === false){
+                        window.parent.postMessage({type:'init'}, '*');
+                        initialized = true;
                     }
                 });
             </script>
@@ -70,6 +72,6 @@ window.addEventListener('message', (e) => {
     } else if (e?.data?.type === 'save' && e?.origin === 'null') {
         window.parent.postMessage({ type: 'save', content: e.data.content }, '*');
     } else if (e?.data?.type === 'init' && e?.origin === 'null') {
-        window.parent.postMessage({ type: 'init' });
+        window.parent.postMessage({ type: 'init' }, '*');
     }
 });
