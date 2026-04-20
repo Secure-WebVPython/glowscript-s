@@ -541,14 +541,14 @@
         }
 
         const codeTextarea = document.getElementById('edit');
-        if(codeTextarea == null){
+        if (codeTextarea == null) {
             return;
         }
         const newContent = codeTextarea.value;
-        if(newContent == null || newContent?.length === 0){
+        if (newContent == null || newContent?.length === 0) {
             return;
         }
-        window.parent.postMessage({type: 'save', content: newContent}, '*');
+        window.parent.postMessage({ type: 'save', content: newContent }, '*');
     })
 
     exportCode: {
@@ -592,12 +592,15 @@
         const codeTextarea = document.getElementById('edit');
         if (codeTextarea == null) { return; }
         const code = e.data.content;
-        if(code == null || code?.length === 0){
+        if (code == null || code?.length === 0) {
             return;
         }
         codeTextarea.value = code;
         GSupdate(); // inital update for line numbers
     });
+
+    // tell the parent the editor has loaded
+    window.parent.postMessage({ type: 'init'}, '*');
 </script>
 
 </html>

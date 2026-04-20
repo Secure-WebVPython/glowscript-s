@@ -53,9 +53,10 @@ const srcdoc = `
                 window.addEventListener('message', (e)=>{
                     if(e?.data?.type === 'load' && e?.origin === 'null'){
                         sandbox.contentWindow.postMessage({type:'load', content: e.data.content}, '*');
-                    }
-                    if(e?.data?.type === 'save' && e?.origin === 'null'){
+                    } else if(e?.data?.type === 'save' && e?.origin === 'null'){
                         window.parent.postMessage({type: 'save', content: e.data.content}, '*');
+                    } else if(e?.data?.origin === 'init' && e?.origin === 'null'){
+                        window.parent.postMessage({type:'init'});
                     }
                 });
             </script>
@@ -63,11 +64,12 @@ const srcdoc = `
         </html>`
 sandbox.srcdoc = srcdoc;
 
-window.addEventListener('message', (e)=>{
-    if(e?.data?.type === 'load' && parentOrigins.indexOf(e?.origin) !== -1){
-        sandbox.contentWindow.postMessage({type:'load', content: e.data.content}, '*');
+window.addEventListener('message', (e) => {
+    if (e?.data?.type === 'load' && parentOrigins.indexOf(e?.origin) !== -1) {
+        sandbox.contentWindow.postMessage({ type: 'load', content: e.data.content }, '*');
+    } else if (e?.data?.type === 'save' && e?.origin === 'null') {
+        window.parent.postMessage({ type: 'save', content: e.data.content }, '*');
+    } else if (e?.data?.origin === 'init' && e?.origin === 'null') {
+        window.parent.postMessage({ type: 'init' });
     }
-    if(e?.data?.type === 'save' && e?.origin === 'null'){
-        window.parent.postMessage({type: 'save', content: e.data.content}, '*');
-    }    
 });
