@@ -539,6 +539,16 @@
         if (indicator != null) {
             indicator.classList.remove('latest');
         }
+
+        const codeTextarea = document.getElementById('edit');
+        if(codeTextarea == null){
+            return;
+        }
+        const newContent = codeTextarea.value;
+        if(newContent == null || newContent?.length === 0){
+            return;
+        }
+        window.parent.postMessage({type: 'save', content: newContent}, '*');
     })
 
     exportCode: {
@@ -572,6 +582,22 @@
             sourcetext.style.height = `${editorHeight}px`;
         }
     }
+
+    // update code from parent
+    window.addEventListener('message', (e) => {
+        if (e.data.type !== 'load') {
+            return;
+        }
+
+        const codeTextarea = document.getElementById('edit');
+        if (codeTextarea == null) { return; }
+        const code = e.data.content;
+        if(code == null || code?.length === 0){
+            return;
+        }
+        codeTextarea.value = code;
+        GSupdate(); // inital update for line numbers
+    });
 </script>
 
 </html>

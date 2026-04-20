@@ -18,6 +18,8 @@ const editorHeight = urlParams.get('height') ?? 0;
 const editorWidthsParam = urlParams.get('section-widths') ?? "0";
 const editorWidthsMatches = (/(\d+),(\d+),(\d+)/gm).exec(editorWidthsParam);
 const editorWidths = editorWidthsMatches?.length >= 4 ? `[${editorWidthsMatches[1]}, ${editorWidthsMatches[2]}, ${editorWidthsMatches[3]}]` : 0;
+const parentOriginParam = urlParams.get('parent-origin') ?? null;
+const parentOrigins = parentOriginParam !== null ? [parentOriginParam] : [];
 
 const srcdoc = `
     <!DOCTYPE html>
@@ -47,7 +49,25 @@ const srcdoc = `
                 };
                 xhr.open("GET", "GlowScript.txt");
                 xhr.send();
+
+                window.addEventListener('message', (e)=>{
+                    if(e?.data?.type === 'load' && e?.origin === 'null'){
+                        sandbox.contentWindow.postMessage({type:'load', content: e.data.content}, '*');
+                    }
+                    if(e?.data?.type === 'save' && e?.origin === 'null'){
+                        window.parent.postMessage({type: 'save', content: e.data.content}, '*');
+                    }
+                });
             </script>
         </ body>
         </html>`
 sandbox.srcdoc = srcdoc;
+
+window.addEventListener('message', (e)=>{
+    if(e?.data?.type === 'load' && parentOrigins.indexOf(e?.origin) !== -1){
+        sandbox.contentWindow.postMessage({type:'load', content: e.data.content}, '*');
+    }
+    if(e?.data?.type === 'save' && e?.origin === 'null'){
+        window.parent.postMessage({type: 'save', content: e.data.content}, '*');
+    }    
+});
