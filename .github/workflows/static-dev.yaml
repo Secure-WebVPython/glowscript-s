@@ -1,19 +1,13 @@
-# Deploy GlowScript Sandbox to GitHub Pages
-name: Deploy Sandbox Dev to Pages
+name: Deploy Both Versions
 
 on:
   push:
-    branches: ["dev"]
+    branches: ["master", "dev"]
   workflow_dispatch:
 
 permissions:
   contents: write
   pages: write
-  id-token: write
-
-concurrency:
-  group: "pages-dev"  # ← Different from master to avoid conflicts
-  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -33,11 +27,10 @@ jobs:
       - name: Build sandbox
         run: npm run build:sandbox
 
-      - name: Deploy to dev subfolder
-        id: deployment
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist-sandbox
-          target-folder: dev
+          target-folder: ${{ github.ref == 'refs/heads/master' && '.' || 'dev' }}
           branch: gh-pages
           token: ${{ secrets.GITHUB_TOKEN }}
