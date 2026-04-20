@@ -1,0 +1,44 @@
+.GlowScriptBody {
+    overflow: hidden;
+}
+
+.api {
+    min-height: 0px;
+    margin-bottom: 10px;
+}
+
+.split p {
+    padding: 20px;
+}
+
+.split {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &#glows {
+        overflow-x: auto;
+    }
+}
+
+.gutter {
+    background-color: #ccc;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.gutter.gutter-horizontal {
+    cursor: ew-resize;
+}
+
+.split.split-horizontal,
+.gutter.gutter-horizontal {
+    height: 100%;
+    float: left;
+}
+
+#sourcetext {
+    width: auto !important;
+}

@@ -1,0 +1,47 @@
+.GlowScriptBody {
+    overflow: scroll;
+}
+
+#sourcetext {
+    display: flex;
+    flex-direction: row;
+
+    #edit {
+        width: 100% !important;
+    }
+}
+
+#print {
+    height: 70px !important;
+}
+
+/* Center canvas */
+/* .glowscript-canvas-wrapper.ui-resizable {
+    left: 50%;
+    transform: translateX(-50%);
+} */
+
+.api {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+}
+
+.split.split-horizontal {
+    width: 100%;
+
+    &#glows {
+        height: auto;
+        min-height: 10px;
+        flex-shrink: 1;
+    }
+
+    &#printing {
+        height: auto;
+
+        & * {
+            margin-right: 10px;
+        }
+    }
+
+}
