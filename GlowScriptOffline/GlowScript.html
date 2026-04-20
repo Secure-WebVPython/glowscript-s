@@ -599,8 +599,8 @@
         codeTextarea.value = decodeURIComponent(code);
         GSupdate(); // inital update for line numbers
     });
-    
-    console.log(e, "bottom-send")
+
+    console.log("bottom-send")
     // tell the parent the editor has loaded
     window.parent.postMessage({ type: 'init'}, '*');
 </script>
