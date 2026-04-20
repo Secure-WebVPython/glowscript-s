@@ -55,7 +55,7 @@ const srcdoc = `
                         sandbox.contentWindow.postMessage({type:'load', content: e.data.content}, '*');
                     } else if(e?.data?.type === 'save' && e?.origin === 'null'){
                         window.parent.postMessage({type: 'save', content: e.data.content}, '*');
-                    } else if(e?.data?.origin === 'init' && e?.origin === 'null'){
+                    } else if(e?.data?.type === 'init' && e?.origin === 'null'){
                         window.parent.postMessage({type:'init'});
                     }
                 });
@@ -69,7 +69,7 @@ window.addEventListener('message', (e) => {
         sandbox.contentWindow.postMessage({ type: 'load', content: e.data.content }, '*');
     } else if (e?.data?.type === 'save' && e?.origin === 'null') {
         window.parent.postMessage({ type: 'save', content: e.data.content }, '*');
-    } else if (e?.data?.origin === 'init' && e?.origin === 'null') {
+    } else if (e?.data?.type === 'init' && e?.origin === 'null') {
         window.parent.postMessage({ type: 'init' });
     }
 });
