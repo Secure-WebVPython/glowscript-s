@@ -52,7 +52,7 @@ const srcdoc = `
 
                 let initialized = false;
                 window.addEventListener('message', (e)=>{
-                    if(e?.data?.type === 'load' && e?.origin === 'null'){
+                    if(e?.data?.type === 'load'){
                         sandbox.contentWindow.postMessage({type:'load', content: e.data.content}, '*');
                     } else if(e?.data?.type === 'save' && e?.origin === 'null'){
                         window.parent.postMessage({type: 'save', content: e.data.content}, '*');
