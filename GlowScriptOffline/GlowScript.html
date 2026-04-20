@@ -585,6 +585,7 @@
 
     // update code from parent
     window.addEventListener('message', (e) => {
+        console.log(e,"bottom");
         if (e.data.type !== 'load') {
             return;
         }
@@ -595,7 +596,7 @@
         if (code == null || code?.length === 0) {
             return;
         }
-        codeTextarea.value = code;
+        codeTextarea.value = decodeURIComponent(code);
         GSupdate(); // inital update for line numbers
     });
 
