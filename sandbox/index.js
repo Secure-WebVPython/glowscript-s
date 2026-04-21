@@ -52,7 +52,6 @@ const srcdoc = `
 
                 let initialized = false;
                 window.addEventListener('message', (e)=>{
-                    console.log(e,"mid2");
                     if(e?.data?.type === 'load'){
                         sandbox.contentWindow.postMessage({type:'load', content: e.data.content}, '*');
                     } else if(e?.data?.type === 'save' && e?.origin === 'null'){
@@ -68,7 +67,6 @@ const srcdoc = `
 sandbox.srcdoc = srcdoc;
 
 window.addEventListener('message', (e) => {
-    console.log(e,"mid1");
     if (e?.data?.type === 'load' && parentOrigins.indexOf(e?.origin) !== -1) {
         sandbox.contentWindow.postMessage({ type: 'load', content: e.data.content }, '*');
     } else if (e?.data?.type === 'save' && e?.origin === 'null') {

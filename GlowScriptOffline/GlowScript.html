@@ -585,7 +585,6 @@
 
     // update code from parent
     window.addEventListener('message', (e) => {
-        console.log(e,"bottom");
         if (e.data.type !== 'load') {
             return;
         }
@@ -600,7 +599,6 @@
         GSupdate(); // inital update for line numbers
     });
 
-    console.log("bottom-send")
     // tell the parent the editor has loaded
     window.parent.postMessage({ type: 'init'}, '*');
 </script>
